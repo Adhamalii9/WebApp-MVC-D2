@@ -1,0 +1,74 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model WebApp_MVC_D2.ViewModels.InstructorWithCourseAndDeptViewModel
+
+@{
+    ViewData["Title"] = "Add";
+}
+
+
+<h1>Add Instructor</h1>
+<form method="post" action="/Instructor/SaveAdd/@Model.Id">
+
+    <div>
+        <label>Name</label>
+        <input class="form form-control" name="Name" value="@Model.Name" id="Name" />
+    </div>
+    <div>
+        <label>Address</label>
+        <input class="form form-control" name="Address" value="@Model.Address" id="Address" />
+    </div>
+    <div>
+        <label>Image</label>
+        <input class="form form-control" name="Image" value="@Model.Image" id="Image" />
+    </div>
+    <div>
+        <label>Salary</label>
+        <input class="form form-control" name="Salary" value="@Model.Salary" id="Salary" />
+    </div>
+    
+    <div>
+        <label>Course</label>
+        <select class="form form-control" name="CrsId">
+            @foreach (var course in Model.Courses)
+            {
+                if (Model.CrsId == course.Id)
+                {
+                    <option value="@course.Id" selected>@course.Name</option>
+                }
+                else
+                {
+                    <option value="@course.Id">@course.Name</option>
+                }
+            }
+        </select>
+    </div>
+    <div>
+        <label>Department</label>
+        <select class="form form-control" name="DeptId">
+            @foreach (var deptItem in Model.Departments)
+            {
+                if (Model.DeptId == deptItem.Id)
+                {
+                    <option value="@deptItem.Id" selected>@deptItem.Name</option>
+                }
+                else
+                {
+                    <option value="@deptItem.Id">@deptItem.Name</option>
+                }
+            }
+        </select>
+    </div>
+    <br />
+    <div>
+        <input type="submit" value="Create" class="btn btn-success" />
+        </div>
+
+</form>
+<hr />
+<a class="btn btn-outline-primary" href="/Instructor/index">All Instructors</a>
+

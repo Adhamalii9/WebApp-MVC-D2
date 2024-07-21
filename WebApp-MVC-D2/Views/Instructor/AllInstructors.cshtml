@@ -1,0 +1,35 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model List<WebApp_MVC_D2.Models.Instructor>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class ="w-25">NAME</th>
+            <th>IMAGE</th>
+            <th>SALARY</th>
+            <th >ADDRESS</th>
+            <th class="w-25">INSTRUCTOR DETAILS</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var instructor in Model)
+        {
+            <tr>
+                <td>@instructor.Name</td>
+                <td><img class="w-25 h-25" src="@instructor.Image" /></td>
+                <td>@instructor.Salary</td>
+                <td>@instructor.Address</td>
+                <td>
+                    <a class="btn btn-outline-primary" href="/Instructor/Details?id=@instructor.Id">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a class="btn btn-outline-primary" href="/Instructor/Add">Add Instructor</a>
