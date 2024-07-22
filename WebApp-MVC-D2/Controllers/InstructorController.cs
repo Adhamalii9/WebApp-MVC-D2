@@ -108,6 +108,22 @@ namespace WebApp_MVC_D2.Controllers
             InsFromReq.Departments = context.Departments.ToList();
             return View("EditInstructor", InsFromReq);
         }
-            
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var inst = context.Instructors.FirstOrDefault( i => i.Id == id);
+            context.Instructors.Remove(inst);
+            context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Search(String name)
+        {
+            var inst = context.Instructors.Where( i => i.Name == name).ToList();
+            return View("AllInstructors", inst);
+
+        }
     }
 }

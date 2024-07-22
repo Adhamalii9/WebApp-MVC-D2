@@ -1,19 +1,19 @@
 ﻿@model List<WebApp_MVC_D2.Models.Instructor>
 
 @{
-    ViewData["Title"] = "Instructor List";
+    ViewData["Title"] = "Search Results";
 }
 
+<h2>Search Results</h2>
+
 <div>
-    <form  action="/Instructor/Search" method="get">
-        <input class ="w-50 h-50" type="text" name="name" placeholder="Search by name" />
+    <form action="/Instructor/Search" method="get">
+        <input type="text" name="name" placeholder="Search by name" />
         <button type="submit" class="btn btn-outline-primary">Search</button>
         <a class="btn btn-outline-primary" href="/Instructor/index">Clear</a>
 
     </form>
 </div>
-
-
 
 <table class="table table-bordered table-hover">
     <thead>
@@ -41,4 +41,4 @@
     </tbody>
 </table>
 
-<a class="btn btn-outline-primary" href="/Instructor/Add">Add Instructor</a>
+<a class="btn btn-outline-primary" href="/Instructor">Back to List</a>

@@ -1,0 +1,29 @@
+﻿@model WebApp_MVC_D2.ViewModels.TraineeWithCourseNameAndDegreeViewModel
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="w-25">NAME</th>
+            <th>COURSE NAME</th>
+            <th>COURSE DEGREE</th>
+            <th>COURSE MIN DEGREE</th>
+            <th>TRAINEE DEGREE</th>
+            <th>STATUS</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr style="color: @(Model.SuccOrFail ? "green" : "red")">
+            <td>@Model.Name</td>
+            <td>@Model.CourseName</td>
+            <td>@Model.CourseDegree</td>
+            <td>@Model.CourseMinDegree</td>
+            <td>@Model.TraineeDegree</td>
+            <td>
+                @(Model.SuccOrFail ? "Passed" : "Failed")
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div>
+    <a class="btn btn-outline-primary" href="/Trainee/Details?id=@Model.Id">Trainee Details</a>
+</div>

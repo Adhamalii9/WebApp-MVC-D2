@@ -1,0 +1,50 @@
+﻿@model WebApp_MVC_D2.ViewModels.TraineeWithCourses
+
+@{
+    ViewData["Title"] = "Trainee Details";
+}
+
+<h2>@Model.Name</h2>
+
+<div>
+    <img src="@Model.Image" alt="Trainee Image" style="max-width: 200px;" />
+</div>
+
+<div>
+    <strong>Address:</strong>
+    <p>@Model.Address</p>
+</div>
+
+<div>
+    <strong>Department:</strong>
+    <p>@Model.Department</p>
+</div>
+
+<div>
+    <strong>Courses:</strong>
+    @if (Model.Courses != null && Model.Courses.Any())
+    {
+        <ul>
+            @foreach (var course in Model.Courses)
+            {
+                <li>
+                    <a href="/trainee/showresult/@Model.Id?crsid=@course.CourseId">
+                        @course.CourseName
+                    </a>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No courses available</p>
+    }
+</div>
+
+<div>
+    <a class="btn btn-outline-primary w-50" href="/Trainee/AllTrainees">All Trainees</a>
+</div>
+
+
+
+

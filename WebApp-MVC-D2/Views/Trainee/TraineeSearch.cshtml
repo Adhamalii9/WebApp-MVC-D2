@@ -1,0 +1,40 @@
+﻿@model List<WebApp_MVC_D2.ViewModels.TraineesWithDeptName>
+
+@{
+    ViewData["Title"] = "Treinee Search Results";
+}
+
+<h2>Search Results</h2>
+
+<div>
+    <form action="/Instructor/TraineeSearch" method="get">
+        <input type="text" name="name" placeholder="Search by name" />
+        <button type="submit" class="btn btn-outline-primary">Search</button>
+        <a class="btn btn-outline-primary" href="/Trainee/AllTrainees">Clear</a> 
+
+    </form>
+</div>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="w-25">NAME</th>
+            <th>DEPARTMENT</th>
+            <th>ACTIONS</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var trainee in Model)
+        {
+            <tr>
+                <td>@trainee.Name</td>
+                <td>@trainee.DepartmentName</td>
+                <td>
+                    <a class="btn btn-outline-primary" href="/Trainee/Details?id=@trainee.Id">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a class="btn btn-outline-primary" href="/Trainee/Add">Add Trainee</a>
