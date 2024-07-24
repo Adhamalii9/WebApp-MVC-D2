@@ -1,7 +1,11 @@
-﻿@model WebApp_MVC_D2.ViewModels.TraineeWithCourses
+﻿
+
+@model WebApp_MVC_D2.ViewModels.TraineeWithCourses
 
 @{
+    Layout = "template";
     ViewData["Title"] = "Trainee Details";
+     // IgnoreSection("Scripts");
 }
 
 <h2>@Model.Name</h2>
@@ -42,9 +46,6 @@
 </div>
 
 <div>
-    <a class="btn btn-outline-primary w-50" href="/Trainee/AllTrainees">All Trainees</a>
+    <a class="btn btn-outline-primary w-50" href="/Trainee">All Trainees</a>
 </div>
-
-
-
 

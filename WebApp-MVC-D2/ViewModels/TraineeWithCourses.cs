@@ -7,6 +7,8 @@
         public string Image { get; set; }
         public string Address { get; set; }
         public string Department { get; set; }
+        public int DeptId { get; set; }
+
         public ICollection<CourseWithNameAndIDViewModel> Courses { get; set; }
 
     }

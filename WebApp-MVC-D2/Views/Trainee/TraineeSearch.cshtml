@@ -1,6 +1,8 @@
 ﻿@model List<WebApp_MVC_D2.ViewModels.TraineesWithDeptName>
 
 @{
+    Layout = "template";
+
     ViewData["Title"] = "Treinee Search Results";
 }
 
@@ -10,7 +12,7 @@
     <form action="/Instructor/TraineeSearch" method="get">
         <input type="text" name="name" placeholder="Search by name" />
         <button type="submit" class="btn btn-outline-primary">Search</button>
-        <a class="btn btn-outline-primary" href="/Trainee/AllTrainees">Clear</a> 
+        <a class="btn btn-outline-primary" href="/Trainee">Clear</a> 
 
     </form>
 </div>

@@ -8,7 +8,7 @@ namespace WebApp_MVC_D2.Controllers
     {
         ITIDbContext context = new ITIDbContext();
 
-        public IActionResult AllTrainees()
+        public IActionResult index()
         {
             List<Trainee> trainees = context.Trainees.ToList();
 
@@ -66,7 +66,6 @@ namespace WebApp_MVC_D2.Controllers
         [HttpGet]
         public IActionResult Details(int id)
         {
-            // Retrieve the trainee and associated department and courses from the database
             var trainee = context.Trainees
                 .Where(t => t.Id == id)
                 .Select(t => new
@@ -79,7 +78,7 @@ namespace WebApp_MVC_D2.Controllers
                     Courses = t.CrsResults
                         .Select(cr => new
                         {
-                            cr.Crs.Id, // Assuming Crs has an Id property
+                            cr.Crs.Id,
                             cr.Crs.Name
                         })
                         .ToList()
@@ -88,10 +87,9 @@ namespace WebApp_MVC_D2.Controllers
 
             if (trainee == null)
             {
-                return NotFound(); // Return a 404 if the trainee is not found
+                return NotFound();
             }
 
-            // Map to the view model
             var traineeVM = new TraineeWithCourses
             {
                 Id = trainee.Id,
@@ -109,7 +107,39 @@ namespace WebApp_MVC_D2.Controllers
             return View("TraineeDetails", traineeVM);
         }
 
+        [HttpGet]
+        public IActionResult Add()
+        {
+            var departments = context.Departments.ToList();
+            ViewBag.Departments = departments;
+            return View("addTrainee");
+        }
 
+        [HttpPost]
+        public IActionResult SaveAdd(TraineeWithCourses model)
+        {
+            if (model.Name != null)
+            {
+                var trainee = new Trainee
+                {
+                    Name = model.Name,
+                    Address = model.Address,
+                    Image = model.Image,
+                    DeptId = model.DeptId
+                };
+
+                context.Trainees.Add(trainee);
+                context.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                var departments = context.Departments.ToList();
+                ViewBag.Departments = departments;
+                return View("addTrainee", model);
+            }
+        }
 
         [HttpGet]
         public IActionResult TraineeSearch(string name)

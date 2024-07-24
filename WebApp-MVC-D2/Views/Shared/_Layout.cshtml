@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - WebApp_MVC_D2</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WebApp_MVC_D2.styles.css" asp-append-version="true" />
 </head>
 <body>
@@ -26,10 +26,13 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="/trainee/alltrainees">Trainee</a>
+                            <a class="nav-link text-dark" href="/trainee">Trainee</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="/Instructor/index">Instructors</a>
+                            <a class="nav-link text-dark" href="/Instructor">Instructors</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="/course">Courses</a>
                         </li>
                     </ul>
                 </div>
@@ -49,7 +52,6 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    <script src="/js/site.js" asp-append-version="true"></script>
 </body>
 </html>

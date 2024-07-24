@@ -1,0 +1,38 @@
+﻿@model WebApp_MVC_D2.ViewModels.TraineeWithCourses
+
+@{
+    Layout = "template";
+    ViewBag.Title = "Add New Trainee";
+}
+
+<h2>Add New Trainee</h2>
+
+<form asp-action="SaveAdd" method="post">
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Address"></label>
+        <input asp-for="Address" class="form-control" />
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Image"></label>
+        <input asp-for="Image" class="form-control" />
+        <span asp-validation-for="Image" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="DeptId">Department</label>
+        <select asp-for="DeptId" class="form-control" asp-items="@(new SelectList(ViewBag.Departments, "Id", "Name"))"></select>
+        <span asp-validation-for="DeptId" class="text-danger"></span>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+<br />
+<a class="btn btn-outline-primary" href="/trainee">All Trainees</a>
+
+
+

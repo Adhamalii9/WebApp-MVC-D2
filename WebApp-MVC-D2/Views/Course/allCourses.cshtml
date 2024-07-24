@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "allcourses";
+    Layout = "template";
+}
+
+
+@model List<WebApp_MVC_D2.ViewModels.CourseWithDeptNameViewModel>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <td>NAME</td>
+            <td>DEGREE</td>
+            <td>MIN DEGREE</td>
+            <td>COURSE HOURS</td>
+            <td>DEPARTMENT</td>
+            <td>ACTIONS</td>
+            
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+        @foreach(var course in Model)
+        {
+            <tr>
+            <td>@course.Name</td>
+            <td>@course.Degree</td>
+            <td>@course.MinDegree</td>
+            <td>@course.Hours</td>
+            <td>@course.DepartmentName</td>
+            <td>
+                    <a class="btn btn-outline-primary" href="/course/edit?id=@course.Id">Edit</a>
+                    <a class="btn btn-outline-primary" href="/course/delete?id=@course.Id">Delete</a>
+
+                </td>
+            </tr>
+        }
+        
+    </tbody>
+</table>
+
+<a class="btn btn-outline-primary" href="/course/add">Add Course</a>
