@@ -22,7 +22,6 @@ namespace WebApp_MVC_D2.Controllers
                     Degree = course.Degree,
                     MinDegree = course.MinDegree,
                     Hours = course.Hours,
-                    DepartmentName = department.Name
                 })
                 .ToList();
             return View("allCourses" , courses);
@@ -31,7 +30,7 @@ namespace WebApp_MVC_D2.Controllers
 
         public IActionResult add()
         {
-            ViewBag.Departments = new SelectList(context.Departments.ToList(), "Name", "Name");
+            ViewBag.Departments = new SelectList(context.Departments.ToList(), "Id", "Name");
 
             return View("addcourse");
         }
@@ -40,9 +39,8 @@ namespace WebApp_MVC_D2.Controllers
         [HttpPost]
         public IActionResult saveAdd(CourseWithDeptNameViewModel crsFromReq)
         {
-            var department = context.Departments.FirstOrDefault(d => d.Name == crsFromReq.DepartmentName);
 
-            if (crsFromReq != null)
+            if (ModelState.IsValid)
             {
                 var course = new Course
                 {
@@ -50,7 +48,7 @@ namespace WebApp_MVC_D2.Controllers
                     Degree = crsFromReq.Degree,
                     MinDegree = crsFromReq.MinDegree,
                     Hours = crsFromReq.Hours,
-                    DeptId = department.Id
+                    DeptId = crsFromReq.DepartmentId
                 };
                 context.Add(course);
                 context.SaveChanges();
@@ -59,6 +57,18 @@ namespace WebApp_MVC_D2.Controllers
             ViewBag.Departments = new SelectList(context.Departments.ToList(), "Id", "Name");
             return View("addcourse", crsFromReq);
         }
+
+        public IActionResult VerifyHours(int hours)
+        {
+            if (hours % 3 == 0)
+            {
+                return Json(true);
+            }
+            return Json("Hours must be divisble by 3");
+        }
+
+        
+
 
         public IActionResult edit(int id)
         {
@@ -71,9 +81,9 @@ namespace WebApp_MVC_D2.Controllers
                 Degree = course.Degree,
                 MinDegree = course.MinDegree,
                 Hours = course.Hours,
-                DepartmentName = departments.FirstOrDefault(d => d.Id == course.DeptId)?.Name
+                DepartmentId = course.DeptId
             };
-            ViewBag.Departments = new SelectList( context.Departments.ToList(), "Name", "Name", courseVM.DepartmentName);
+            ViewBag.Departments = new SelectList( context.Departments.ToList(), "Id", "Name", courseVM.DepartmentId);
 
             return View("editCourse", courseVM);
         }
@@ -85,20 +95,19 @@ namespace WebApp_MVC_D2.Controllers
             {
                 var course = context.Courses.FirstOrDefault(c => c.Id == courseVM.Id);
 
-                var department = context.Departments.FirstOrDefault(d => d.Name == courseVM.DepartmentName);
                 
                 course.Name = courseVM.Name;
                 course.Degree = courseVM.Degree;
                 course.MinDegree = courseVM.MinDegree;
                 course.Hours = courseVM.Hours;
-                course.DeptId = department.Id;
+                course.DeptId = courseVM.DepartmentId;
 
                 context.Update(course);
                 context.SaveChanges();
                 return RedirectToAction("index");
             }
 
-            ViewBag.Departments = new SelectList(context.Departments.ToList(), "Name", "Name", courseVM.DepartmentName);
+            ViewBag.Departments = new SelectList(context.Departments.ToList(), "Name", "Name", courseVM.DepartmentId);
             return View("EditCourse", courseVM);
         }
 

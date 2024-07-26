@@ -26,7 +26,7 @@ namespace WebApp_MVC_D2.Controllers
         public IActionResult Add()
         {
             var viewModel = new InstructorWithCourseAndDeptViewModel();
-            viewModel.Courses = context.Courses.ToList();
+            viewModel.Courses = new List<Course>();
             viewModel.Departments = context.Departments.ToList();
             return View("AddInstructor", viewModel);
         }
@@ -56,6 +56,12 @@ namespace WebApp_MVC_D2.Controllers
             InsFromReq.Departments = context.Departments.ToList();
             return View("AddInstructor", InsFromReq);
 
+        }
+
+        public IActionResult GetCoursesRelatedToDept(int deptId)
+        {
+            var courses = context.Courses.Where(c => c.DeptId == deptId).ToList();
+            return Json(courses);
         }
 
         [HttpGet]

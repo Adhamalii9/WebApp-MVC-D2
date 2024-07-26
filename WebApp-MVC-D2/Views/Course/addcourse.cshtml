@@ -3,7 +3,6 @@
 @{
     ViewData["Title"] = "Add Course";
     Layout = "template";
-
 }
 
 <h2>Add Course</h2>
@@ -34,11 +33,11 @@
                 <span asp-validation-for="Hours" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DepartmentName" class="control-label"></label>
-                <select asp-for="DepartmentName" class="form-control" asp-items="ViewBag.Departments">
+                <label asp-for="DepartmentId" class="control-label"></label>
+                <select asp-for="DepartmentId" class="form-control" asp-items="ViewBag.Departments">
                     <option value="">-- Select Department --</option>
                 </select>
-                <span asp-validation-for="DepartmentName" class="text-danger"></span>
+                <span asp-validation-for="DepartmentId" class="text-danger"></span>
             </div>
             <br />
             <div class="form-group">
@@ -50,8 +49,10 @@
 <br />
 <a class="btn btn-outline-primary" href="/course">Back To Courses</a>
 
-@* @section Scripts {
+
+ @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-} *@
+}
+ 

@@ -1,75 +1,72 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-
-@model WebApp_MVC_D2.ViewModels.InstructorWithCourseAndDeptViewModel
+﻿@model WebApp_MVC_D2.ViewModels.InstructorWithCourseAndDeptViewModel
 
 @{
     Layout = "template";
-    ViewData["Title"] = "Add";
+    ViewData["Title"] = "Add Instructor";
 }
 
-
 <h1>Add Instructor</h1>
-<form method="post" action="/Instructor/SaveAdd/@Model.Id">
+<form method="post" asp-action="SaveAdd">
 
     <div>
-        <label>Name</label>
-        <input class="form form-control" name="Name" value="@Model.Name" id="Name" />
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
     </div>
     <div>
-        <label>Address</label>
-        <input class="form form-control" name="Address" value="@Model.Address" id="Address" />
+        <label asp-for="Address"></label>
+        <input asp-for="Address" class="form-control" />
+        <span asp-validation-for="Address" class="text-danger"></span>
     </div>
     <div>
-        <label>Image</label>
-        <input class="form form-control" name="Image" value="@Model.Image" id="Image" />
+        <label asp-for="Image"></label>
+        <input asp-for="Image" class="form-control" />
+        <span asp-validation-for="Image" class="text-danger"></span>
     </div>
     <div>
-        <label>Salary</label>
-        <input class="form form-control" name="Salary" value="@Model.Salary" id="Salary" />
+        <label asp-for="Salary"></label>
+        <input asp-for="Salary" class="form-control" />
+        <span asp-validation-for="Salary" class="text-danger"></span>
     </div>
-    
     <div>
-        <label>Course</label>
-        <select class="form form-control" name="CrsId">
-            @foreach (var course in Model.Courses)
-            {
-                if (Model.CrsId == course.Id)
-                {
-                    <option value="@course.Id" selected>@course.Name</option>
-                }
-                else
-                {
-                    <option value="@course.Id">@course.Name</option>
-                }
-            }
+        <label asp-for="DeptId">Department</label>
+        <select asp-for="DeptId" class="form-control" asp-items="@(new SelectList(Model.Departments, "Id", "Name"))" id="Dept_Id" onchange="getCoursesByDepartment()">
+            <option value="">Select Department</option>
         </select>
+        <span asp-validation-for="DeptId" class="text-danger"></span>
     </div>
     <div>
-        <label>Department</label>
-        <select class="form form-control" name="DeptId">
-            @foreach (var deptItem in Model.Departments)
-            {
-                if (Model.DeptId == deptItem.Id)
-                {
-                    <option value="@deptItem.Id" selected>@deptItem.Name</option>
-                }
-                else
-                {
-                    <option value="@deptItem.Id">@deptItem.Name</option>
-                }
-            }
+        <label asp-for="CrsId">Course</label>
+        <select asp-for="CrsId" class="form-control" id="Crs_Id">
+            <option value="">Select Course</option>
         </select>
+        <span asp-validation-for="CrsId" class="text-danger"></span>
     </div>
+
     <br />
     <div>
         <input type="submit" value="Create" class="btn btn-success" />
-        </div>
-
+    </div>
 </form>
 <hr />
-<a class="btn btn-outline-primary" href="/Instructor/index">All Instructors</a>
+<a class="btn btn-outline-primary" asp-controller="Instructor" asp-action="Index">All Instructors</a>
 
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function getCoursesByDepartment() {
+            var departmentId = $('#Dept_Id').val();
+            $.ajax({
+                url: '/Instructor/GetCoursesRelatedToDept?deptId=' + departmentId,
+                success: function (courses) {
+                    var courseDropdown = $('#Crs_Id');
+                    courseDropdown.empty();
+                    courseDropdown.append('<option value="">Select Course</option>');
+                    $.each(courses, function (index, course) {
+                        courseDropdown.append('<option value="' + course.id + '">' + course.name + '</option>');
+                    });
+                }
+            });
+        }
+    </script>
+}
