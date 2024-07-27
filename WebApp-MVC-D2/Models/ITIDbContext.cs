@@ -5,6 +5,10 @@ namespace WebApp_MVC_D2.Models
 {
     public class ITIDbContext : DbContext
     {
+        public ITIDbContext() : base()
+        { }
+        public ITIDbContext(DbContextOptions<ITIDbContext> options) : base(options) { }
+
         public DbSet<Department> Departments { get; set; }
         public DbSet<Instructor> Instructors { get; set; }
         public DbSet<Trainee> Trainees { get; set; }

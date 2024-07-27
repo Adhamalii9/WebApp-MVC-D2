@@ -1,3 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+using WebApp_MVC_D2.Models;
+using WebApp_MVC_D2.Repository;
+
 namespace WebApp_MVC_D2
 {
     public class Program
@@ -8,6 +12,19 @@ namespace WebApp_MVC_D2
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+            });
+
+            builder.Services.AddDbContext<ITIDbContext>(option =>
+            {
+                option.UseSqlServer(builder.Configuration.GetConnectionString("cs"));
+            });
+
+            builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+            builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 
             var app = builder.Build();
 
