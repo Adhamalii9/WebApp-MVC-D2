@@ -11,9 +11,9 @@ namespace WebApp_MVC_D2.Models
         public string Address { get; set; }
 
         public int DeptId { get; set; }
-        public Department Dept { get; set; }
+        public virtual Department Dept { get; set; }
 
-        public ICollection<CrsResult> CrsResults { get; set; }
+        public virtual ICollection<CrsResult> CrsResults { get; set; }
 
 
 

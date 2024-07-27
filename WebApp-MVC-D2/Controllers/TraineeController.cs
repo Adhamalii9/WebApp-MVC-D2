@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebApp_MVC_D2.Models;
 using WebApp_MVC_D2.ViewModels;
+using X.PagedList;
+using System.Linq;
+using X.PagedList.Extensions;
 
 namespace WebApp_MVC_D2.Controllers
 {
@@ -8,33 +11,25 @@ namespace WebApp_MVC_D2.Controllers
     {
         ITIDbContext context = new ITIDbContext();
 
-        public IActionResult index()
+        public IActionResult Index(int? page)
         {
-            List<Trainee> trainees = context.Trainees.ToList();
+            var trainees = context.Trainees.ToList();
+            var departments = context.Departments.ToList();
 
-            List<Department> departments = context.Departments.ToList();
-
-            List<TraineesWithDeptName> traineesVm = new List<TraineesWithDeptName>();
-
-            foreach (var trainee in trainees)
+            var traineesVm = trainees.Select(trainee => new TraineesWithDeptName
             {
-                var department = departments.FirstOrDefault(d => d.Id == trainee.DeptId);
+                Id = trainee.Id,
+                Name = trainee.Name,
+                Address = trainee.Address,
+                Image = trainee.Image,
+                DeptId = trainee.DeptId,
+                DepartmentName = departments.FirstOrDefault(d => d.Id == trainee.DeptId)?.Name
+            }).ToList();
 
-                var traineeVm = new TraineesWithDeptName
-                {
+            int pageSize = 5;
+            int pageNumber = (page ?? 1);
 
-                    Id = trainee.Id,
-                    Name = trainee.Name,
-                    Address = trainee.Address,
-                    Image = trainee.Image,
-                    DeptId = trainee.DeptId,
-                    DepartmentName = department?.Name
-                };
-
-                traineesVm.Add(traineeVm);
-            }
-
-            return View("AllTrainees", traineesVm);
+            return View("AllTrainees", traineesVm.ToPagedList(pageNumber, pageSize));
         }
 
         public IActionResult ShowResult(int id, int crsId)
@@ -60,7 +55,6 @@ namespace WebApp_MVC_D2.Controllers
             }
 
             return View("traineeResult", traineeVM);
-
         }
 
         [HttpGet]
@@ -145,33 +139,21 @@ namespace WebApp_MVC_D2.Controllers
         public IActionResult TraineeSearch(string name)
         {
             var trainees = context.Trainees.ToList();
-
             var departments = context.Departments.ToList();
 
             var filteredTrainees = trainees.Where(t => t.Name.Contains(name, StringComparison.OrdinalIgnoreCase)).ToList();
 
-            List<TraineesWithDeptName> traineesVm = new List<TraineesWithDeptName>();
-
-            foreach (var trainee in filteredTrainees)
+            var traineesVm = filteredTrainees.Select(trainee => new TraineesWithDeptName
             {
-                var department = departments.FirstOrDefault(d => d.Id == trainee.DeptId);
+                Id = trainee.Id,
+                Address = trainee.Address,
+                Image = trainee.Image,
+                Name = trainee.Name,
+                DeptId = trainee.DeptId,
+                DepartmentName = departments.FirstOrDefault(d => d.Id == trainee.DeptId)?.Name
+            }).ToList();
 
-                var traineeVm = new TraineesWithDeptName
-                {
-                    Id = trainee.Id,
-                    Address = trainee.Address,
-                    Image = trainee.Image,
-                    Name = trainee.Name,
-                    DeptId = trainee.DeptId,
-                    DepartmentName = department?.Name,
-                    
-                    
-                };
-
-                traineesVm.Add(traineeVm);
-            }
             return View("AllTrainees", traineesVm);
         }
-
     }
 }
